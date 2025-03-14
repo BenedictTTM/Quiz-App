@@ -98,7 +98,7 @@ app.delete('/questions/:id', async (req, res) => {
 });
 
 
-mongoose.connect('mongodb+srv://bnoafotey:0109089004@cluster0.5dhna.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb://localhost:27017/startup_log')
   .then(() => {
     console.log("Connected to database");
     app.listen(PORT, () => {

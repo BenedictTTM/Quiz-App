@@ -7,7 +7,7 @@ const QuestionSchema = new mongoose.Schema({
         unique: true // Each question should be unique
     },
     possibleAnswer: {
-        type: String, // Keep as String or change to Array if storing multiple choices
+        type: [String], // Keep as String or change to Array if storing multiple choices
         required: true
     },
     answer: {
