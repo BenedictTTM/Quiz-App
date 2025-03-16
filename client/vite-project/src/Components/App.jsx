@@ -1,36 +1,32 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SideBar from "./SideBar";
 import Home from "./Home";
-import About from "./About";
+import Courses from "./Courses";
 import Questions from "./Questions";
-import "../Styles/styles.css"; // Import external CSS file
+import Leaderboard from "./Leaderboard";
+import Shop from "./Shop";
+import Account from "./Account";
+import "../Styles/App.css"; // Ensure styles are included
 
-
-function App() {
+const App = () => {
   return (
-    
-    <Router styles={{ backgroundColor: "black" }}>
-      
-      <div className="container">
-        <nav className="navbar">
-          <ul className="nav-links">
-            <li><Link to="/" className="nav-item">Home</Link></li>
-            <li><Link to="/about" className="nav-item">About</Link></li>
-            <li><Link to="/questions" className="nav-item">Questions</Link></li>
-          </ul>
-        </nav>
-
+    <Router>
+      <div className="app-container">
+        <SideBar />   {/* Sidebar on the left */}
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/questions" element={<Questions />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/Questions" element={<Questions />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
         </div>
       </div>
     </Router>
   );
-}
+};
 
 export default App;
-

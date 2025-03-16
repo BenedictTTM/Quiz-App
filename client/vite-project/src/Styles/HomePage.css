@@ -1,0 +1,23 @@
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+  }
+  
+  .nav-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Optional for rounded icon */
+    background: transparent; /* Ensures no background */
+    animation: shake 10.5s infinite ease-in-out;
+  
+  }
+  
+  /* Add hover effect */
+  .nav-icon:hover {
+    animation: shake 4.5s ease-in-out;
+    box-shadow: rgb(218, 212, 212) 0 0 10px;  
+  }
+  
