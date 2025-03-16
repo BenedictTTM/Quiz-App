@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Styles/Questions.css';
+import Time from './Time';
 import DescriptionAlerts from './DescriptionAlerts';
 
 function Quiz() {
@@ -54,10 +55,20 @@ function Quiz() {
 
     return (
         <div className="quiz-container">
-            <h1 className="quiz-title">Professional Quiz</h1>
+            <div className="progress-bar">
+    <div className="progress" style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}></div>
+</div>
+
+            <h1 className="quiz-title">Quiz</h1>
             {alertInfo.severity && <DescriptionAlerts severity={alertInfo.severity} message={alertInfo.message} />}
+            
+            <div className="score-bar">
+                <p><strong>{currentIndex + 1} / {questions.length}</strong></p>
+                <p>Score: {Math.round((score / questions.length) * 100)}%</p>
+            </div>
+
             <div className="question-box">
-                <p className="question-text"><strong>Q:</strong> {questions[currentIndex].question}</p>
+                <p className="question-text">{questions[currentIndex].question}</p>
                 <form className="options-list">
                     {options.map((option, index) => (
                         <label key={index} className="option">
@@ -72,8 +83,10 @@ function Quiz() {
                         </label>
                     ))}
                 </form>
+
                 <div className="buttons">
                     <button onClick={handlePrev} disabled={currentIndex === 0} className="nav-button">Previous</button>
+                    <button onClick={handleSubmit} disabled={!selectedAnswer} className="submit-button">Submit</button>
                     {currentIndex === questions.length - 1 ? (
                         <button onClick={() => alert(`Quiz completed! Your final score is ${score}`)} className="submit-button">
                             Finish
@@ -81,11 +94,12 @@ function Quiz() {
                     ) : (
                         <button onClick={handleNext} className="nav-button">Next</button>
                     )}
-                    <button onClick={handleSubmit} disabled={!selectedAnswer} className="submit-button">Submit</button>
                 </div>
             </div>
+            
             <div className="score-container">
-                <p className="score">Score: {score}</p>
+                
+                <Time/>
             </div>
         </div>
     );

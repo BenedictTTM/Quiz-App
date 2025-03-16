@@ -1,14 +1,19 @@
 
-
 .sidebar {
-    width: 250px;
-    height: 200vh;
-    background: #f8f9fa;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-  }
+  width: 250px;
+  height: 100vh; /* Full height */
+  background: #f8f9fa;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  position: fixed; /* Fix it to the left */
+  top: 0;
+  left: 0; /* Ensure it stays at the far left */
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better separation */
+}
+
   
   .logo {
     font-size: 22px;
@@ -78,3 +83,61 @@
     color: white;
   }
   
+  .sidebar .logo {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 10px 0;
+    position: relative;
+  }
+  
+  .sidebar .logo img {
+    max-width: 90px; /* Adjust size */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Ensures centering */
+
+  }
+  
+  .sidebar .menu {
+    margin-top: 10px; /* Space between logo and menu */
+  }
+  
+  .logo img {
+    width: 80px;  /* Adjust size */
+    height: auto;
+    display: block;
+    margin: 0 auto 10px; /* Center the image */
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  }
+  
+  /* Trophy Hover Effect */
+  .logo img:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.2));
+  }
+
+  /* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light gray track */
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #888; /* Darker gray scrollbar */
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Slightly darker on hover */
+}
+
+/* Firefox scrollbar */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}

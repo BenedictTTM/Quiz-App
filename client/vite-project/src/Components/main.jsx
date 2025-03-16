@@ -5,9 +5,10 @@ import App from './App';
 import TopNavBar from "./TopNavBar"; // Import the navbar
 import '../Styles/main.css';
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <TopNavBar /> {/* Navbar at the top */}
+      <TopNavBar  /> {/* Navbar at the top */}
 <App styles={{ backgroundColor: "black" }} />
   </StrictMode>
 );

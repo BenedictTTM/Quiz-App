@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHome, FaBookOpen, FaTrophy, FaShoppingBag, FaUsers, FaUserCircle, FaClipboardList, FaTelegramPlane, FaExclamationCircle } from "react-icons/fa";
 import "../Styles/Sidebar.css"; // Import styles
+import trophy from "../assets/trophy.png"; // Import the trophy image
 
 const SideBar = () => {
   const [active, setActive] = useState("Home");
@@ -17,14 +18,15 @@ const SideBar = () => {
 
   return (
     <div className="sidebar">
-      <div className="logo">🟨 <strong>Aquinas</strong></div>
+      <div className="logo"><img src={trophy} alt="The Nation Science and Maths Quiz Trophy" /><strong>Menu</strong></div>
+      <hr />
 
       <ul className="menu">
         {menuItems.map((item) => (
           <li key={item.name} className={active === item.name ? "active" : ""} onClick={() => setActive(item.name)}>
             <Link to={item.path} className="menu-item">
-              {item.icon}
-              <span>{item.name}</span>
+             {item.icon}
+            <span>{item.name}</span>
             </Link>
           </li>
         ))}

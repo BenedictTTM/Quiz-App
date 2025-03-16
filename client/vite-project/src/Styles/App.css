@@ -58,3 +58,64 @@
   padding: 20px;
   overflow-y: auto;
 }
+
+
+/*Dark Mode*/
+
+/* Default light mode styles */
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Apply dark mode styles when "dark-mode" class is added */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Sidebar styles */
+body.dark-mode .sidebar {
+  background-color: #2c2c2c;
+}
+
+/* Navbar styles */
+body.dark-mode .top-nav {
+  background-color: #333;
+}
+
+/* Buttons */
+body.dark-mode .nav-button {
+  background-color: #444;
+  color: white;
+}
+
+/* Default light mode */
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Style the sidebar in dark mode */
+body.dark-mode .sidebar {
+  background-color: #2c2c2c;
+}
+
+/* Style the top navigation bar */
+body.dark-mode .top-nav {
+  background-color: #333;
+}
+
+/* Change button styles */
+body.dark-mode .nav-button {
+  background-color: #444;
+  color: white;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { DarkModeProvider } from "./DarkMode"; // Import the provider
 import SideBar from "./SideBar";
 import Home from "./Home";
 import Courses from "./Courses";
@@ -7,25 +8,28 @@ import Questions from "./Questions";
 import Leaderboard from "./Leaderboard";
 import Shop from "./Shop";
 import Account from "./Account";
+import TopNavBar from "./TopNavBar"; // Import the top navbar
 import "../Styles/App.css"; // Ensure styles are included
 
 const App = () => {
   return (
-    <Router>
-      <div className="app-container">
-        <SideBar />   {/* Sidebar on the left */}
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/Questions" element={<Questions />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/account" element={<Account />} />
-          </Routes>
+  
+      <Router>
+        <div className="app-container">
+          <SideBar />
+          <div className="content">
+            <TopNavBar /> {/* Add the TopNavBar */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/Questions" element={<Questions />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/account" element={<Account />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
   );
 };
 

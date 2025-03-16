@@ -1,52 +1,62 @@
-/* Navigation Bar Styling */
+/* Improved Styling for the Layout */
+
+/* Remove Top Navigation Bar, Keep Only Buttons */
 .top-nav {
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #b6bfc9;
-    padding: 12px 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
-  }
-  
-  /* Button Styles */
-  .nav-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  /* Home Button */
-  .home-button:hover {
-    background: rgba(0, 0, 255, 0.2);
-  }
-  
-  /* Dark Mode Toggle */
-  .darkmode-button:hover {
-    background: rgba(255, 165, 0, 0.2);
-  }
-  
-  /* Icon Styles */
-  .icon {
-    font-size: 22px;
-    color: #333;
-  }
-  
-  /* Dark Mode */
-  .dark-mode {
-    background-color: #1a202c;
-    color: white;
-  }
-  
-  .dark-mode .icon {
-    color: white;
-  }
-  
-  .dark-mode .nav-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
+  position: fixed;
+  top: 10px;
+  right: 10px; /* Move to the far right */
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  height: auto;
+  align-items: center;
+}
+
+/* Remove Formatting for Home & Dark Mode Icons */
+.top-nav button {
+  all: unset; /* Reset all styles */
+  cursor: pointer;
+}
+
+/* Main Content Wrapper */
+.main-container {
+  padding: 20px;
+}
+
+/* Sidebar Design */
+.sidebar {
+  width: 260px;
+  background: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: 2px solid #e0e0e0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+/* Sidebar Links */
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.sidebar a:hover {
+  background: #e9ecef;
+}
