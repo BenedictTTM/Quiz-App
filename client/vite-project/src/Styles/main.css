@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light fallback color */
 }
 
 /* Transparent and Fixed Background Image */
@@ -14,10 +15,20 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/background.jpeg') center center/contain no-repeat; 
-    opacity: 0.02; /* Makes the background very transparent */
+    background: url('../assets/trophy.png') center center / contain no-repeat fixed;
+    background-color: #f8f9fa; /* Fallback color */
+    opacity: 0.15; /* Makes the background very transparent */
     z-index: -1;
     pointer-events: none; /* Ensures it doesn't interfere with user interaction */
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/trophy.png') right 10% center / contain no-repeat fixed;
+    filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.3)); /* 3D Shadow Effect */
+    z-index: -1;
 }
 
 /* Ensure content stays visible and scrollable */

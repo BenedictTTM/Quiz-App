@@ -1,0 +1,34 @@
+.alert-container {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20%;
+    max-width: 500px;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  @media (max-width: 600px) {
+    .alert-container {
+      width: 95%;
+      top: 5px;
+    }
+  }
+  
+  /* Add smooth fade-in */
+  .alert-container .MuiAlert-root {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

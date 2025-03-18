@@ -118,3 +118,28 @@
     border-radius: 5px;
     transition: width 0.3s ease-in-out;
 }
+
+.option {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+.correct-answer {
+    background-color: #d4edda; /* Light green */
+    border-color: #155724;
+    color: #155724;
+}
+
+.wrong-answer {
+    background-color: #f8d7da; /* Light red */
+    border-color: #721c24;
+    color: #721c24;
+}

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaBookOpen, FaTrophy, FaShoppingBag, FaUsers, FaUserCircle, FaClipboardList, FaTelegramPlane, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaHome, FaBookOpen, FaTrophy, FaShoppingBag,
+  FaUserCircle, FaClipboardList, FaTelegramPlane, FaExclamationCircle
+} from "react-icons/fa";
 import "../Styles/Sidebar.css"; // Import styles
-import trophy from "../assets/trophy.png"; // Import the trophy image
+import nsmq from "../assets/nsmq.png"; // Import the trophy image
 
 const SideBar = () => {
   const [active, setActive] = useState("Home");
@@ -17,21 +20,34 @@ const SideBar = () => {
   ];
 
   return (
+    <div className="sidebarBody"  >
     <div className="sidebar">
-      <div className="logo"><img src={trophy} alt="The Nation Science and Maths Quiz Trophy" /><strong>Menu</strong></div>
-      <hr />
+      {/* Logo Section */}
+      <div className="logo">
+        <img src={nsmq} alt="NSMQ Trophy" />
+        <strong>N.S.M.Q</strong>
+      </div>
+      
+      {/* Styled Horizontal Rule */}
+      <hr className="custom-hr" />
 
+      {/* Navigation Menu */}
       <ul className="menu">
         {menuItems.map((item) => (
-          <li key={item.name} className={active === item.name ? "active" : ""} onClick={() => setActive(item.name)}>
+          <li
+            key={item.name}
+            className={active === item.name ? "active" : ""}
+            onClick={() => setActive(item.name)}
+          >
             <Link to={item.path} className="menu-item">
-             {item.icon}
-            <span>{item.name}</span>
+              {item.icon}
+              <span>{item.name}</span>
             </Link>
           </li>
         ))}
       </ul>
 
+      {/* More Section */}
       <div className="more">
         <h4>MORE</h4>
         <button className="more-btn">
@@ -44,6 +60,7 @@ const SideBar = () => {
           <FaTelegramPlane /> Use on Telegram
         </button>
       </div>
+    </div>
     </div>
   );
 };
