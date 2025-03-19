@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Styles/Questions.css';
 import Time from './Time';
+import Explanation from './Explanation';
 
 function Quiz() {
     const [questions, setQuestions] = useState([]);
@@ -11,7 +12,7 @@ function Quiz() {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/questions')
+        axios.get('http://localhost:5000/questions')
             .then(result => setQuestions(result.data))
             .catch(error => console.error('Error fetching questions:', error));
     }, []);
@@ -94,11 +95,13 @@ function Quiz() {
                             Finish
                         </button>
                     ) : null}
+              
                 </div>
+                
             </div>
 
             <div className="score-container">
-                <Time />
+                <Explanation question={ questions[currentIndex]}/>
             </div>
         </div>
     );
