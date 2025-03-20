@@ -13,9 +13,7 @@ import TopNavBar from "./TopNavBar"; // Import the top navbar
 import "../Styles/App.css"; // Ensure styles are included
 
 import {
-  FaHome, FaBookOpen, FaTrophy, FaShoppingBag,
-  FaUserCircle, FaClipboardList, FaTelegramPlane,
-  FaExclamationCircle, FaBars, FaTimes
+ FaBars, FaTimes
 } from "react-icons/fa";
 
 

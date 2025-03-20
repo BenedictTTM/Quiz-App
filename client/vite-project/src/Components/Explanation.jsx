@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import "../Styles/Explanation.css";
 
 function Explanation({ question }) {
   const [answer, setAnswer] = useState("");
+  const [showExplanation, setShowExplanation] = useState(false);
 
   useEffect(() => {
     if (!question) return; // Prevent fetching if there's no question
@@ -11,7 +13,7 @@ function Explanation({ question }) {
         const response = await fetch("http://localhost:5000/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: question.question }) // Ensure we send the actual text
+          body: JSON.stringify({ question: question.question }), // Send the actual text
         });
 
         const data = await response.json();
@@ -27,8 +29,23 @@ function Explanation({ question }) {
 
   return (
     <div className="explanation-container">
-      <h2>AI Generated Answer:</h2>
-      <p>{answer || "Loading..."}</p>
+      {/* Show explanation when button is clicked */}
+      {showExplanation && (
+        <div className="explanation-box">
+          <h2 className="explanation">Explanation:</h2>
+          <p className="ai-explanation">{answer || "Loading..."}</p>
+        </div>
+      )}
+
+      {/* Button to show explanation */}
+      {!showExplanation && (
+        <button 
+          className="show-explanation-btn" 
+          onClick={() => setShowExplanation(true)}
+        >
+          View explanation
+        </button>
+      )}
     </div>
   );
 }

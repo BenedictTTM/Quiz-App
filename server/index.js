@@ -94,7 +94,7 @@ app.post("/ask", async (req, res) => {
     const response = await hf.chatCompletion({
       model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
       messages: [
-        { role: "system", content: "You are a helpful AI that answers questions clearly and concisely." },
+        { role: "system", content: "You are a helpful AI that answers questions which very short answers ,clearly and concisely." },
         { role: "user", content: question }
       ],
       max_tokens: 1024

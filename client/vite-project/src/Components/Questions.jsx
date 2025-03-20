@@ -30,14 +30,14 @@ function Quiz() {
         if (selectedAnswer === questions[currentIndex].answer) {
             setScore(prev => prev + 1);
         }
+    };
 
-        setTimeout(() => {
-            if (currentIndex < questions.length - 1) {
-                setCurrentIndex(prev => prev + 1);
-                setSelectedAnswer("");
-                setIsSubmitted(false);
-            }
-        }, 2000); // Move to the next question after 1.5 seconds
+    const handleNext = () => {
+        if (currentIndex < questions.length - 1) {
+            setCurrentIndex(prev => prev + 1);
+            setSelectedAnswer("");
+            setIsSubmitted(false);
+        }
     };
 
     if (questions.length === 0) {
@@ -67,9 +67,9 @@ function Quiz() {
                         let optionClass = "";
                         if (isSubmitted) {
                             if (option === correctAnswer) {
-                                optionClass = "correct-answer"; // Green highlight
+                                optionClass = "correct-answer";
                             } else if (option === selectedAnswer) {
-                                optionClass = "wrong-answer"; // Red highlight
+                                optionClass = "wrong-answer";
                             }
                         }
                         return (
@@ -80,7 +80,7 @@ function Quiz() {
                                     value={option}
                                     checked={selectedAnswer === option}
                                     onChange={() => handleAnswerSelect(option)}
-                                    disabled={isSubmitted} // Prevent changes after submission
+                                    disabled={isSubmitted} 
                                 />
                                 {option}
                             </label>
@@ -89,19 +89,40 @@ function Quiz() {
                 </form>
 
                 <div className="buttons">
-                    <button onClick={handleSubmit} disabled={!selectedAnswer || isSubmitted} className="submit-button">Submit</button>
-                    {currentIndex === questions.length - 1 && isSubmitted ? (
-                        <button onClick={() => alert(`Quiz completed! Your final score is ${score}/${questions.length}`)} className="submit-button">
-                            Finish
+                    {!isSubmitted ? (  
+                        <button 
+                            onClick={() => {
+                                handleSubmit();
+                                setIsSubmitted(true);
+                            }}
+                            disabled={!selectedAnswer} 
+                            className="submit-button"
+                        >
+                            Submit
                         </button>
-                    ) : null}
-              
+                    ) : (
+                        <>
+                            {currentIndex < questions.length - 1 ? ( 
+                                <button 
+                                    onClick={handleNext} 
+                                    className="next-button"
+                                >
+                                    Next
+                                </button>
+                            ) : (
+                                <button 
+                                    onClick={() => alert(`Quiz completed! Your final score is ${score}/${questions.length}`)} 
+                                    className="submit-button"
+                                >
+                                    Finish
+                                </button>
+                            )}
+                             <div className='Explanation-containner '> 
+                            <Explanation question={questions[currentIndex]} />
+                            </div>
+                        </>
+                    )}
                 </div>
-                
-            </div>
-
-            <div className="score-container">
-                <Explanation question={ questions[currentIndex]}/>
             </div>
         </div>
     );
