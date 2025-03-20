@@ -1,0 +1,56 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .start-button, .leaderboard-button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .start-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .start-button:hover {
+    background-color: #218838;
+  }
+  
+  .leaderboard-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .leaderboard-button:hover {
+    background-color: #0056b3;
+  }
+  

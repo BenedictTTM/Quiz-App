@@ -4,16 +4,18 @@ import "../Styles/Explanation.css";
 function Explanation({ question }) {
   const [answer, setAnswer] = useState("");
   const [showExplanation, setShowExplanation] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!question) return; // Prevent fetching if there's no question
+    if (!question || !showExplanation) return;
 
     async function fetchAnswer() {
+      setIsLoading(true);
       try {
         const response = await fetch("http://localhost:5000/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: question.question }), // Send the actual text
+          body: JSON.stringify({ question: question.question }),
         });
 
         const data = await response.json();
@@ -21,24 +23,24 @@ function Explanation({ question }) {
       } catch (error) {
         console.error("Error fetching AI response:", error);
         setAnswer("Error loading answer.");
+      } finally {
+        setIsLoading(false);
       }
     }
 
     fetchAnswer();
-  }, [question]); // ✅ Re-fetch whenever the question changes
+  }, [question, showExplanation]); 
 
   return (
     <div className="explanation-container">
-      {/* Show explanation when button is clicked */}
-      {showExplanation && (
+      {showExplanation ? (
         <div className="explanation-box">
           <h2 className="explanation">Explanation:</h2>
-          <p className="ai-explanation">{answer || "Loading..."}</p>
+          <p className="ai-explanation">
+            {isLoading ? "Loading..." : answer}
+          </p>
         </div>
-      )}
-
-      {/* Button to show explanation */}
-      {!showExplanation && (
+      ) : (
         <button 
           className="show-explanation-btn" 
           onClick={() => setShowExplanation(true)}

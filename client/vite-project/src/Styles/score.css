@@ -1,0 +1,160 @@
+/* === General Styles === */
+.score-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* === Header Section === */
+.congrats {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2b9348;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.completion-time {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+}
+
+.xp-points {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ff9800;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: #ff5722;
+    font-weight: bold;
+}
+
+/* === Score Card === */
+.score-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid #2b9348;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.score-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.score-text {
+    font-size: 18px;
+    color: #666;
+}
+
+/* === Review Section === */
+.review-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.review-box {
+    flex: 1 1 calc(50% - 20px); /* Side by side when space allows */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-left: 5px solid #d32f2f;
+    transition: transform 0.3s ease;
+}
+
+.review-box:hover {
+    transform: scale(1.02);
+}
+
+/* === Wrong Answers Section === */
+.wrong-answers {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.wrong-answers h3 {
+    font-size: 22px;
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.wrong-answer-item {
+    text-align: left;
+}
+
+.wrong-answer-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.wrong-answer {
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.correct-answer {
+    font-weight: bold;
+    color: #2b9348;
+}
+
+/* === Explanation Section === */
+.explanation-container {
+    margin-top: 10px;
+}
+
+.explanation-box {
+    background: #e3f2fd;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 5px solid #1e88e5;
+}
+
+.show-explanation-btn {
+    background: #1e88e5;
+    color: white;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.show-explanation-btn:hover {
+    background: #1565c0;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .review-box {
+        flex: 1 1 100%; /* Stack on smaller screens */
+    }
+
+    .score-container {
+        padding: 20px;
+    }
+
+    .score-title {
+        font-size: 20px;
+    }
+
+    .score-text, .wrong-answer-item p {
+        font-size: 15px;
+    }
+}
