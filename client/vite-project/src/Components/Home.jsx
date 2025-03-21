@@ -7,19 +7,24 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1 className="title">Welcome to the Ultimate Quiz Challenge! 🎯</h1>
+      
+      <h1 className="title">The National Science And Maths Quiz🎯</h1>
       <p className="description">
-        Test your knowledge across various topics and climb the leaderboard!  
-        Are you ready to prove yourself?
+      This Is where Champions Are Made🎯
       </p>
 
       <div className="buttons">
-        <button className="start-button" onClick={() => navigate("/Questions")}>
-          🏆 Start Quiz
+
+        <button className="register-button" onClick={() => navigate("/Register")}>
+          📝 Register
         </button>
-        <button className="leaderboard-button" onClick={() => navigate("/leaderboard")}>
-          📊 View Leaderboard
-        </button>
+      </div>
+      
+      <div className="signInBox">
+      <p className="login-text">Already Have An Account?</p>
+      <button className="signIn-button" onClick={() => navigate("/logIn")}>
+        Sign In
+      </button>
       </div>
     </div>
   );

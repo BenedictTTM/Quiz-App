@@ -1,56 +1,207 @@
+@keyframes backgroundCycle {
+  0%, 10% {
+    background: url('../assets/NSMQM.png') center center / cover no-repeat fixed;
+  }
+  51%, 10% {
+    background: url('../assets/AQT.jpeg') center center / cover no-repeat fixed;
+  }
+  100%, 1% {
+    background: url('../assets/trophy.png') center center / cover no-repeat fixed;
+  }
+}
+
+.animated-background {
+  animation: backgroundCycle 20s infinite;
+  transition: background 11s ease-in-out;
+}
+
+
+
+
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-    background-color: #1e1e1e;
-    color: white;
-    padding: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  position: relative;
+  animation: backgroundCycle 20s infinite; /* Change every 5 seconds */
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  position: relative;
+  animation: backgroundCycle 12s infinite; /* Change every 4 seconds */
+}
+
+
+/* Overlay Effect to Improve Text Readability */
+.home-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  backdrop-filter: blur(5px); /* Slight blur effect */
+  z-index: 1;
+}
+
+/* Text Content */
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.description {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Buttons Container */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 2;
+}
+
+/* General Button Styles */
+.start-button, 
+.register-button, 
+.signIn-button {
+  padding: 16px 32px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Start Quiz Button */
+.start-button {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+}
+
+.start-button:hover {
+  background: linear-gradient(135deg, #218838, #1e7e34);
+  transform: scale(1.05);
+}
+
+/* Register Button */
+.register-button {
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  color: black;
+}
+
+.register-button:hover {
+  background: linear-gradient(135deg, #ff9900, #ff6600);
+  transform: scale(1.05);
+}
+
+/* Sign In Button */
+.signIn-button {
+  background: linear-gradient(135deg, #ff4500, #d63031);
+  color: white;
+  border: 2px solid transparent;
+  margin-top: 15px;
+}
+
+.signIn-button:hover {
+  background: linear-gradient(135deg, #d63031, #c0392b);
+  border: 2px solid #ffcc00;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 69, 0, 0.5);
+}
+
+.signIn-button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+      font-size: 2.5rem;
   }
-  
+
   .description {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+      font-size: 1.1rem;
   }
-  
-  .buttons {
-    display: flex;
-    gap: 15px;
+
+  .start-button, 
+  .register-button, 
+  .signIn-button {
+      font-size: 1rem;
+      padding: 14px 28px;
   }
-  
-  .start-button, .leaderboard-button {
-    padding: 12px 24px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .start-button {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .start-button:hover {
-    background-color: #218838;
-  }
-  
-  .leaderboard-button {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .leaderboard-button:hover {
-    background-color: #0056b3;
-  }
-  
+}
+.signIn-button {
+  position: relative;  /* Ensure it's on top */
+  z-index: 1000; /* Higher than other elements */
+  opacity: 1; /* Fully visible */
+  pointer-events: auto; /* Enable clicking */
+}
+
+.signInBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 15px;
+  width: 100%;
+  border-radius: 22px;
+  max-width: 30rem;
+  background-color: #c88147;
+
+}
+
+.login-text {
+  position: relative;  /* Ensure it's on top */
+  z-index: 1000; /* Higher than other elements */
+  opacity: 1; /* Fully visible */
+  pointer-events: auto; /* Enable clicking */
+}
+
+.signIn-button {
+  background: linear-gradient(45deg, #ff6600, #cc5500);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.signIn-button:hover {
+  background: linear-gradient(45deg, #cc5500, #993d00);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
