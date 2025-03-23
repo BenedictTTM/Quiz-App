@@ -1,47 +1,62 @@
-/* Center the form */
+/* Main login container */
 .login-container {
+    display: flex;
+    height: 100vh;
+    background: #f0f2f5;
+}
+
+/* Left Section: Image */
+.image-section {
+    flex: 1;
+    background: url("../assets/Mikel.jpeg") center center / cover no-repeat;
+    height: 100vh; /* Full height */
+    filter: blur(5px); /* Adjust blur intensity */
+    
+    
+}
+
+/* Right Section: Form */
+.form-section {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-}
-
-/* Style the form box */
-.login-form {
+    padding: 3rem;
     background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
+    height: 60vh; /* Different height than image */
+    margin-top: 10vh; /* Adjust to make it look centered */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    min-width: 40rem;
+    border-radius: 1%;
+    margin-top: 100px;
+
+
 }
 
-/* Form title */
-.login-form h2 {
-    margin-bottom: 1rem;
-    color: #333;
+/* Form Styling */
+.login-form {
+    width: 100%;
+    max-width: 320px;
 }
 
-/* Input fields */
 .login-form input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    width: 140%;
+    height: 25%;
+    padding: 14px;
+    margin: 14px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 6px;
 }
 
-/* Submit button */
+/* Button Styling */
 .login-form button {
-    width: 100%;
-    padding: 10px;
+    width: 140%;
+    padding: 12px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
     transition: background 0.3s ease;
@@ -51,15 +66,26 @@
     background-color: #0056b3;
 }
 
-/* Loading effect */
-.login-form button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-/* Message styling */
+/* Error Message */
 .login-message {
     margin-top: 10px;
     color: red;
     font-size: 14px;
+    text-align: center;
+}
+
+/* Sign-up link */
+.signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.signup-text a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
 }

@@ -11,7 +11,7 @@ const SideBar = () => {
   const [active, setActive] = useState("Home");
 
   const menuItems = [
-    { name: "Home", icon: <FaHome />, path: "/" },
+    { name: "Home", icon: <FaHome />, path: "/hom" },
     { name: "Courses", icon: <FaBookOpen />, path: "/courses" },
     { name: "Question Bank", icon: <FaClipboardList />, path: "/Questions" },
     { name: "Leaderboard", icon: <FaTrophy />, path: "/leaderboard" },

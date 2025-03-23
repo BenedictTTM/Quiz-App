@@ -9,6 +9,7 @@ import Shop from "./Shop";
 import Account from "./Account";
 import Register from "./Register";
 import Login from "./LogIn";
+import TopNavBar from "./TopNavBar"; // Import the top navbar
 
 import "../Styles/App.css"; 
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -38,7 +39,7 @@ const App = () => {
         {!hideSidebarRoutes.includes(location.pathname) && slide ? <SideBar /> : null}
         
         <div className="content">
-        
+        <TopNavBar /> {/* Add the TopNavBar */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />

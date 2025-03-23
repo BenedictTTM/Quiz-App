@@ -21,10 +21,8 @@ function Home() {
       </div>
       
       <div className="signInBox">
-      <p className="login-text">Already Have An Account?</p>
-      <button className="signIn-button" onClick={() => navigate("/logIn")}>
-        Sign In
-      </button>
+      
+
       </div>
     </div>
   );

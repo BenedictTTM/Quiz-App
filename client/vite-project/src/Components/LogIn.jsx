@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import '../Styles/Login.css';  // Import CSS file
+import "../Styles/Login.css";  // Import the updated CSS
 
 function Login() {
     const [userDetails, setUserDetails] = useState({ username: "", password: "" });
@@ -38,29 +38,38 @@ function Login() {
 
     return (
         <div className="login-container">
-            <form className="login-form" onSubmit={handleSubmit}>
+            {/* Left side with blurred image */}
+            <div className="image-section"></div>
+
+            {/* Right side with form */}
+            <div className="form-section">
                 <h2>Sign In</h2>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={userDetails.username}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={userDetails.password}
-                    onChange={handleChange}
-                    required
-                />
-                <button type="submit" disabled={loading}>
-                    {loading ? "Signing in..." : "Sign In"}
-                </button>
-                {message && <p className="login-message">{message}</p>}
-            </form>
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        value={userDetails.username}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={userDetails.password}
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Signing in..." : "Sign In"}
+                    </button>
+                    {message && <p className="login-message">{message}</p>}
+                </form>
+                <p className="signup-text">
+                    Don't have an account? <a href="/register">Register</a>
+                </p>
+            </div>
         </div>
     );
 }
