@@ -18,7 +18,6 @@ const QuestionSchema = new mongoose.Schema({
 
 
 
-const Question = mongoose.model("BioQuestion", QuestionSchema);
+const ChemQuestion = mongoose.model("ChemQuestion", QuestionSchema);
 
-module.exports = Question; // Export the model
-
+module.exports = ChemQuestion; // Export the model

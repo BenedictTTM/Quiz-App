@@ -7,13 +7,25 @@ const bodyParser = require('body-parser');
 const dotenv = require("dotenv");
 const { HfInference } = require("@huggingface/inference");
 
+
+
+
 const Question = require('./Models/models'); // Corrected model import
+
+const ChemQuestion = require('./Models/ChemModel'); // Corrected model import
+
+const PhysicQuestion = require('./Models/PhysicsModel'); // Corrected model import
+
+const MatheQuestion = require('./Models/MathematicsModel'); // Corrected model import
+
+
 const User = require('./Models/auth.model'); // New User model
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
-const hf = new HfInference(process.env.HF_API_KEY);
+const hf = new HfInference("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");
+
 const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
 
 // Middleware
@@ -84,7 +96,7 @@ app.get('/', (req, res) => {
 });
 
 // Get All Questions
-app.get('/questions', async (req, res) => {
+app.get('/questions/biology', async (req, res) => {
     try {
         const questions = await Question.find();
         res.status(200).json(questions);
@@ -94,24 +106,23 @@ app.get('/questions', async (req, res) => {
 });
 
 // Create New Question
-app.post('/questions', async (req, res) => {
+app.post('/questions/biology', async (req, res) => {
     try {
-        const { question, possibleAnswer, answer } = req.body;
-        if (!question || !possibleAnswer || !answer) {
-            return res.status(400).json({ message: "All fields are required" });
+        if (!Array.isArray(req.body) || req.body.length === 0) {
+            return res.status(400).json({ message: "Please send an array of questions" });
         }
 
-        const newQuestion = new Question({ question, possibleAnswer, answer });
-        const savedQuestion = await newQuestion.save();
-
-        res.status(201).json(savedQuestion);
+        const savedQuestions = await Question.insertMany(req.body);
+        res.status(201).json(savedQuestions);
     } catch (err) {
-        res.status(500).json({ message: "Failed to add question" });
+        res.status(500).json({ message: "Failed to add questions", error: err.message });
     }
 });
 
+
+
 // Update Question
-app.put('/questions/:id', async (req, res) => {
+app.put('/questions/biology/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const updatedQuestion = await Question.findByIdAndUpdate(id, req.body, { new: true });
@@ -125,7 +136,7 @@ app.put('/questions/:id', async (req, res) => {
 });
 
 // Delete Question
-app.delete('/questions/:id', async (req, res) => {
+app.delete('/questions/biology/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const deletedQuestion = await Question.findByIdAndDelete(id);
@@ -138,6 +149,174 @@ app.delete('/questions/:id', async (req, res) => {
     }
 });
 
+
+
+app.get('/questions/chemistry', async (req, res) => {
+    try {
+        const questions = await ChemQuestion.find();
+        res.status(200).json(questions);
+    } catch (err) {
+        res.status(404).json({ message: "Cannot get the questions" });
+    }
+});
+
+// Create New Question
+
+
+app.post('/questions/chemistry', async (req, res) => {
+    try {
+        if (!Array.isArray(req.body) || req.body.length === 0) {
+            return res.status(400).json({ message: "Please send an array of questions" });
+        }
+
+        const savedQuestions = await ChemQuestion.insertMany(req.body);
+        res.status(201).json(savedQuestions);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to add questions", error: err.message });
+    }
+});
+
+
+// Update Question
+app.put('/questions/chemistry/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedQuestion = await ChemQuestion.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updatedQuestion) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json(updatedQuestion);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to update question" });
+    }
+});
+
+// Delete Question
+app.delete('/questions/chemistry/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedQuestion = await ChemQuestion.findByIdAndDelete(id);
+        if (!deletedQuestion) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json({ message: "Question deleted", data: deletedQuestion });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to delete question" });
+    }
+});
+
+
+app.get('/questions/mathematics', async (req, res) => {
+    try {
+        const questions = await MatheQuestion.find();
+        res.status(200).json(questions);
+    } catch (err) {
+        res.status(404).json({ message: "Cannot get the questions" });
+    }
+});
+
+// Create New Question
+
+
+app.post('/questions/mathematics', async (req, res) => {
+    try {
+        if (!Array.isArray(req.body) || req.body.length === 0) {
+            return res.status(400).json({ message: "Please send an array of questions" });
+        }
+
+        const savedQuestions = await MatheQuestion.insertMany(req.body);
+        res.status(201).json(savedQuestions);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to add questions", error: err.message });
+    }
+});
+
+
+
+// Update Question
+app.put('/questions/mathematics/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedQuestion = await MatheQuestion.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updatedQuestion) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json(updatedQuestion);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to update question" });
+    }
+});
+
+// Delete Question
+app.delete('/questions/mathematics/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedQuestion = await MatheQuestion.findByIdAndDelete(id);
+        if (!deletedQuestion) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json({ message: "Question deleted", data: deletedQuestion });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to delete question" });
+    }
+});
+
+
+
+app.get('/questions/physics', async (req, res) => {
+    try {
+        const questions = await PhysicQuestion.find();
+        res.status(200).json(questions);
+    } catch (err) {
+        res.status(404).json({ message: "Cannot get the questions" });
+    }
+});
+
+// Create New Question
+app.post('/questions/physics', async (req, res) => {
+    try {
+        if (!Array.isArray(req.body) || req.body.length === 0) {
+            return res.status(400).json({ message: "Please send an array of questions" });
+        }
+
+        const savedQuestions = await PhysicQuestion.insertMany(req.body);
+        res.status(201).json(savedQuestions);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to add questions", error: err.message });
+    }
+});
+
+
+// Update Question
+app.put('/questions/physics/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedQuestion = await PhysicQuestion.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updatedQuestion) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json(updatedQuestion);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to update question" });
+    }
+});
+
+// Delete Question
+app.delete('/questions/physics/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedQuestion = await PhysicQuestion.findByIdAndDelete(id);
+        if (!deletedQuestion) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json({ message: "Question deleted", data: deletedQuestion });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to delete question" });
+    }
+});
+
+
+// AI Response Endpoint (Hugging Face)
 // AI Response Endpoint (Hugging Face)
 app.post("/ask", async (req, res) => {
     const { question } = req.body;
@@ -157,7 +336,7 @@ app.post("/ask", async (req, res) => {
 });
 
 // Connect to MongoDB and Start Server
-mongoose.connect('mongodb://localhost:27017/startup_log')
+mongoose.connect('mongodb+srv://Benedict:0109089004.password@cluster0.xiocs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => {
         console.log("✅ Connected to MongoDB");
         app.listen(PORT, () => {

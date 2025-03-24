@@ -1,0 +1,22 @@
+/* FloatingComponent.css */
+.floating-container {
+    height: 63rem;
+    background-color: rgba(236, 236, 232, 0.2);
+    border-left: 4.4px solid rgba(128, 177, 208, 0.2);
+    padding: 10px;
+    max-width: 20rem;
+    margin-top: -6.3rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000; /* Ensures it stays on top */
+    color: rgb(237, 34, 34);
+  }
+  
+  /* Hide when screen width is less than half the height */
+  @media (max-width: 50vw) {
+    .floating-container {
+      display: none !important;
+    }
+  }
+  

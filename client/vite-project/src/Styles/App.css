@@ -12,8 +12,8 @@
   z-index: 2000; /* Higher than sidebar */
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   align-items: center;
   justify-content: center;
 }

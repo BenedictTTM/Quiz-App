@@ -1,8 +1,11 @@
 import React from 'react'
+import RightBar from './RightBar'
 
 function Leaderboard() {
   return (
-    <div>Leaderboard</div>
+    <div>
+        <RightBar></RightBar>
+    </div>
   )
 }
 

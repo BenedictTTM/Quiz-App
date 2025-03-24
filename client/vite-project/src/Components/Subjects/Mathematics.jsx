@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../Styles/Questions.css";
-import Explanation from "./Explanation";
-import Score from "./Score";
+import "../../Styles/Questions.css"; 
+import Explanation from "../Explanation";
+import Score from "../Score";
 
-function Quiz() {
+function Mathematics() {
     const [questions, setQuestions] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -20,7 +20,7 @@ function Quiz() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/questions")
+            .get("http://localhost:5000/questions/mathematics")
             .then((result) => setQuestions(result.data))
             .catch((error) =>
                 console.error("Error fetching questions:", error)
@@ -185,4 +185,4 @@ function Quiz() {
     );
 }
 
-export default Quiz;
+export default Mathematics;

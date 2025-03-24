@@ -1,8 +1,11 @@
 import React from 'react'
+import RightBar from './RightBar'
 
 function Account() {
   return (
-    <div>Account</div>
+    <div>
+        <RightBar></RightBar>
+    </div>
   )
 }
 
