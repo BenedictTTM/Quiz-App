@@ -3,6 +3,7 @@ import axios from "axios";
 import "../../Styles/Questions.css"; 
 import Explanation from "../Explanation";
 import Score from "../Score";
+import Skelet from "../Skelet";
 
 function Chemistry() {
     const [questions, setQuestions] = useState([]);
@@ -12,6 +13,7 @@ function Chemistry() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // State for draggable explanation
     const [position, setPosition] = useState({ x: 50, y: 50 });
@@ -19,12 +21,19 @@ function Chemistry() {
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/questions/chemistry")
-            .then((result) => setQuestions(result.data))
-            .catch((error) =>
-                console.error("Error fetching questions:", error)
-            );
+        // Simulate loading before fetching questions
+        setTimeout(() => {
+            axios
+                .get("http://localhost:5000/questions/chemistry")
+                .then((result) => {
+                    setQuestions(result.data);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("Error fetching questions:", error);
+                    setLoading(false);
+                });
+        }, 2000);
     }, []);
 
     const handleAnswerSelect = (answer) => {
@@ -59,8 +68,14 @@ function Chemistry() {
         }
     };
 
+    // Show skeleton while loading
+    if (loading) {
+        return <Skelet />;
+    }
+
+    // Handle empty questions array
     if (questions.length === 0) {
-        return <p className="loading">Loading questions...</p>;
+        return <p>No questions available.</p>;
     }
 
     if (quizCompleted) {

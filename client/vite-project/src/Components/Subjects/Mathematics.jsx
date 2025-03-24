@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../Styles/Questions.css"; 
+import "../../Styles/alert.css"; 
+
 import Explanation from "../Explanation";
 import Score from "../Score";
+import Skelet from "../Skelet";
 
-function Mathematics() {
+function MathQuiz() {
     const [questions, setQuestions] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -12,19 +14,25 @@ function Mathematics() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // State for draggable explanation
     const [position, setPosition] = useState({ x: 50, y: 50 });
     const [dragging, setDragging] = useState(false);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/questions/mathematics")
-            .then((result) => setQuestions(result.data))
-            .catch((error) =>
-                console.error("Error fetching questions:", error)
-            );
+        setTimeout(() => {
+            axios
+                .get("http://localhost:5000/questions/mathematics")
+                .then((result) => {
+                    setQuestions(result.data);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("Error fetching questions:", error);
+                    setLoading(false);
+                });
+        }, 3000);
     }, []);
 
     const handleAnswerSelect = (answer) => {
@@ -36,7 +44,6 @@ function Mathematics() {
     const handleSubmit = () => {
         if (!selectedAnswer) return;
         setIsSubmitted(true);
-
         const currentQuestion = questions[currentIndex];
 
         if (selectedAnswer === currentQuestion.answer) {
@@ -45,7 +52,7 @@ function Mathematics() {
             setAllWrongAnswers((prev) => [
                 ...prev,
                 { ...currentQuestion, userAnswer: selectedAnswer }
-            ]); 
+            ]);
         }
     };
 
@@ -59,8 +66,8 @@ function Mathematics() {
         }
     };
 
-    if (questions.length === 0) {
-        return <p className="loading">Loading questions...</p>;
+    if (loading) {
+        return <Skelet />;
     }
 
     if (quizCompleted) {
@@ -81,7 +88,6 @@ function Mathematics() {
 
     const correctAnswer = questions[currentIndex]?.answer;
 
-    // Drag event handlers
     const handleDragStart = (e) => {
         setDragging(true);
         setOffset({
@@ -107,13 +113,11 @@ function Mathematics() {
             <div className="progress-bar">
                 <div
                     className="progress"
-                    style={{
-                        width: `${((currentIndex + 1) / questions.length) * 100}%`,
-                    }}
+                    style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
                 ></div>
             </div>
 
-            <h1 className="quiz-title">Quiz</h1>
+            <h1 className="quiz-title">Mathematics Quiz</h1>
 
             <div className="score-bar">
                 <p>
@@ -169,7 +173,6 @@ function Mathematics() {
                                 {currentIndex < questions.length - 1 ? "Next" : "Finish"}
                             </button>
 
-                            {/* Draggable Explanation Box */}
                             <div
                                 className="explanation-container"
                                 style={{ top: `${position.y}px`, left: `${position.x}px` }}
@@ -185,4 +188,4 @@ function Mathematics() {
     );
 }
 
-export default Mathematics;
+export default MathQuiz;

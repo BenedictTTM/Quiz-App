@@ -3,6 +3,7 @@ import axios from "axios";
 import "../../Styles/Questions.css"; 
 import Explanation from "../Explanation";
 import Score from "../Score";
+import Skelet from "../Skelet"; // ✅ Import Skelet component
 
 function Physics() {
     const [questions, setQuestions] = useState([]);
@@ -12,6 +13,7 @@ function Physics() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
+    const [loading, setLoading] = useState(true); // ✅ Added loading state
 
     // State for draggable explanation
     const [position, setPosition] = useState({ x: 50, y: 50 });
@@ -19,12 +21,20 @@ function Physics() {
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/questions/physics")
-            .then((result) => setQuestions(result.data))
-            .catch((error) =>
-                console.error("Error fetching questions:", error)
-            );
+        const timeoutId = setTimeout(() => {
+            axios
+                .get("http://localhost:5000/questions/physics")
+                .then((result) => {
+                    setQuestions(result.data);
+                    setLoading(false); // ✅ Set loading to false after fetching
+                })
+                .catch((error) => {
+                    console.error("Error fetching questions:", error);
+                    setLoading(false); // ✅ Ensure loading stops even on error
+                });
+        }, 3000); // ✅ SetTimeout added before fetching
+
+        return () => clearTimeout(timeoutId); // ✅ Cleanup timeout on unmount
     }, []);
 
     const handleAnswerSelect = (answer) => {
@@ -59,8 +69,8 @@ function Physics() {
         }
     };
 
-    if (questions.length === 0) {
-        return <p className="loading">Loading questions...</p>;
+    if (loading) {
+        return <Skelet />; // ✅ Show Skelet while loading
     }
 
     if (quizCompleted) {

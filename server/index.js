@@ -23,8 +23,8 @@ const User = require('./Models/auth.model'); // New User model
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
-const hf = new HfInference("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");
+const PORT = process.env.PORT ;
+const hf = new HfInference(process.env.HUG);
 
 const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
 
@@ -336,7 +336,7 @@ app.post("/ask", async (req, res) => {
 });
 
 // Connect to MongoDB and Start Server
-mongoose.connect('mongodb+srv://Benedict:0109089004.password@cluster0.xiocs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO)
     .then(() => {
         console.log("✅ Connected to MongoDB");
         app.listen(PORT, () => {

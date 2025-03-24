@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import RightBar from "./RightBar";
-import "../Styles/Hom.css"; // Import CSS file
+import "../Styles/Hom.css";
 import Skelet from "./Skelet";
 
 function Hom() {
   const [ranQuote, setRanQuote] = useState(0);
-  const [rightbar, setRightBar] = useState(true);
+  const [rightbar, setRightBar] = useState(window.innerWidth >= 800);
+  const [fade, setFade] = useState(false);
 
   const Books = [
     { name: "Campbell Biology", img: "/img1.png" },
@@ -18,51 +19,37 @@ function Hom() {
     "The good thing about science is that it's true whether or not you believe in it. — Neil deGrasse Tyson",
   ];
 
-  function getRandomNumber() {
-    return Math.floor(Math.random() * scienceQuotes.length);
-  }
-
   useEffect(() => {
-    setRanQuote(getRandomNumber());
+    const getRandomNumber = () => Math.floor(Math.random() * scienceQuotes.length);
+
     const interval = setInterval(() => {
-      setRanQuote(getRandomNumber());
-    }, 9000);
+      setFade(true);
+      setTimeout(() => {
+        setRanQuote(getRandomNumber());
+        setFade(false);
+      }, 2000); // Slow transition (2s)
+    }, 7000); // Changes every 7 seconds
 
     return () => clearInterval(interval);
   }, []);
 
-  // Effect to toggle RightBar based on screen width
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 800) {
-        setRightBar(false); // Hide RightBar on small screens
-      } else {
-        setRightBar(true);
-      }
-    };
-
-    handleResize(); // Run once on mount
+    const handleResize = () => setRightBar(window.innerWidth >= 800);
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <div className="HomePage">
-      <Skelet></Skelet>
-      {rightbar && <RightBar />} {/* Conditionally render RightBar */}
-      
-      <div className="Box">
-        <p className="motiQuote">{scienceQuotes[ranQuote]}</p>
-        <ul className="book-list">
-          {Books.map((book, index) => (
-            <li key={index} className="book-item">
-              <img src={book.img} alt={book.name} width="100" />
+      <h3 className="welcome-message">👋 Welcome Back!</h3>
+      {rightbar && <RightBar />}
 
-              <p className="bookname">{book.name}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="Box">
+        <p className={`motiQuote ${fade ? "fade-out" : "fade-in"}`}>
+          {scienceQuotes[ranQuote]}
+        </p>
+
+        
       </div>
     </div>
   );

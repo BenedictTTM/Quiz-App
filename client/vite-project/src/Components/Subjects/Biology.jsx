@@ -4,6 +4,7 @@ import "../../Styles/alert.css";
 
 import Explanation from "../Explanation";
 import Score from "../Score";
+import Skelet from "../Skelet"; // Ensure Skelet is imported
 
 function Quiz() {
     const [questions, setQuestions] = useState([]);
@@ -13,20 +14,26 @@ function Quiz() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // State for draggable explanation
     const [position, setPosition] = useState({ x: 50, y: 50 });
     const [dragging, setDragging] = useState(false);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-
     useEffect(() => {
+        setTimeout(() => {
         axios
             .get("http://localhost:5000/questions/biology")
-            .then((result) => setQuestions(result.data))
-            .catch((error) =>
-                console.error("Error fetching questions:", error)
-            );
+            .then((result) => {
+                setQuestions(result.data);
+                setLoading(false); // ✅ Update loading state after fetching
+            })
+            .catch((error) => {
+                console.error("Error fetching questions:", error);
+                setLoading(false); // ✅ Ensure loading stops even on error
+            });
+        }, 3000);
     }, []);
 
     const handleAnswerSelect = (answer) => {
@@ -61,8 +68,8 @@ function Quiz() {
         }
     };
 
-    if (questions.length === 0) {
-        return <p className="loading">Loading questions...</p>;
+    if (loading) {
+        return <Skelet />;
     }
 
     if (quizCompleted) {
