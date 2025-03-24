@@ -40,6 +40,7 @@ function Register() {
 
     return (
         <div className="register-container">
+            <div className="imagea-section"></div>
             <form className="register-form" onSubmit={handleSubmit}>
                 <h2>Register</h2>
                 <input

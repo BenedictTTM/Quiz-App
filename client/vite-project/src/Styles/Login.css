@@ -15,6 +15,12 @@
     
 }
 
+.SignIn{
+    font-size: x-large;
+    margin: 10px;
+    margin-left: 40px;
+}
+
 /* Right Section: Form */
 .form-section {
     flex: 1;
@@ -23,10 +29,8 @@
     align-items: center;
     justify-content: center;
     padding: 3rem;
-    background: white;
     height: 60vh; /* Different height than image */
     margin-top: 10vh; /* Adjust to make it look centered */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     min-width: 40rem;
     border-radius: 1%;
     margin-top: 100px;
@@ -47,6 +51,7 @@
     margin: 14px 0;
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: large;
 }
 
 /* Button Styling */
@@ -78,6 +83,7 @@
 .signup-text {
     margin-top: 15px;
     font-size: 14px;
+    font-weight: bold;
 }
 
 .signup-text a {

@@ -16,9 +16,11 @@
     "nodemon": "^3.1.9",
     "vite": "^6.2.1"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "start": "node server/index.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+}
+,
   "keywords": [],
   "author": "",
   "license": "ISC",

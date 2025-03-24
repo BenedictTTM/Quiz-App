@@ -43,7 +43,7 @@ function Login() {
 
             {/* Right side with form */}
             <div className="form-section">
-                <h2>Sign In</h2>
+                <h2 className="SignIn">Sign In</h2>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <input
                         type="text"

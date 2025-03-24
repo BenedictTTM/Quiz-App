@@ -15,7 +15,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/trophy.png') center center / contain no-repeat fixed;
+    background: url('../assets/NSMQM.png') center center / contain no-repeat fixed;
     background-color: #f8f9fa; /* Fallback color */
     opacity: 0.15; /* Makes the background very transparent */
     z-index: -1;
@@ -26,7 +26,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/trophy.png') right 10% center / contain no-repeat fixed;
+    background: url('../assets/NSMQM.png')  center / contain no-repeat fixed;
     filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.3)); /* 3D Shadow Effect */
     z-index: -1;
 }

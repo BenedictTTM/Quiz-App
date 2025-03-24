@@ -10,7 +10,7 @@ function Home() {
     <div className="home-container">
     
       <h1 className="title">The National Science And Maths Quiz🎯</h1>
-      <p className="description">
+      <p className="description" style={{color:"red"}}>
       This Is where Champions Are Made🎯
       </p>
 

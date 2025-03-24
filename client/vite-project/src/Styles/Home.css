@@ -13,6 +13,7 @@
 .animated-background {
   animation: backgroundCycle 20s infinite;
   transition: background 11s ease-in-out;
+
 }
 
 
