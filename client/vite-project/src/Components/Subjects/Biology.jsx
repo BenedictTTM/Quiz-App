@@ -4,7 +4,6 @@ import "../../Styles/alert.css";
 
 import Explanation from "../Explanation";
 import Score from "../Score";
-import Skelet from "../Skelet"; // Ensure Skelet is imported
 
 function Quiz() {
     const [questions, setQuestions] = useState([]);
@@ -14,27 +13,24 @@ function Quiz() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    // State for draggable explanation
-    const [position, setPosition] = useState({ x: 50, y: 50 });
-    const [dragging, setDragging] = useState(false);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        setTimeout(() => {
-        axios
-            .get("http://localhost:5000/questions/biology")
+        axios.get("http://localhost:5000/questions/biology")
             .then((result) => {
-                setQuestions(result.data);
-                setLoading(false); // ✅ Update loading state after fetching
+                const shuffledQuestions = shuffleArray(result.data);
+                setQuestions(shuffledQuestions);
             })
-            .catch((error) => {
-                console.error("Error fetching questions:", error);
-                setLoading(false); // ✅ Ensure loading stops even on error
-            });
-        }, 3000);
+            .catch((error) => console.error("Error fetching questions:", error));
     }, []);
+
+    const shuffleArray = (array) => {
+        let shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    };
 
     const handleAnswerSelect = (answer) => {
         if (!isSubmitted) {
@@ -47,7 +43,6 @@ function Quiz() {
         setIsSubmitted(true);
 
         const currentQuestion = questions[currentIndex];
-
         if (selectedAnswer === currentQuestion.answer) {
             setScore((prev) => prev + 1);
         } else {
@@ -68,8 +63,8 @@ function Quiz() {
         }
     };
 
-    if (loading) {
-        return <Skelet />;
+    if (questions.length === 0) {
+        return <p className="loading">Loading questions...</p>;
     }
 
     if (quizCompleted) {
@@ -90,29 +85,8 @@ function Quiz() {
 
     const correctAnswer = questions[currentIndex]?.answer;
 
-    // Drag event handlers
-    const handleDragStart = (e) => {
-        setDragging(true);
-        setOffset({
-            x: e.clientX - position.x,
-            y: e.clientY - position.y
-        });
-    };
-
-    const handleDrag = (e) => {
-        if (!dragging) return;
-        setPosition({
-            x: e.clientX - offset.x,
-            y: e.clientY - offset.y
-        });
-    };
-
-    const handleDragEnd = () => {
-        setDragging(false);
-    };
-
     return (
-        <div className="quiz-container" onMouseMove={handleDrag} onMouseUp={handleDragEnd}>
+        <div className="quiz-container">
             <div className="progress-bar">
                 <div
                     className="progress"
@@ -173,20 +147,9 @@ function Quiz() {
                             Submit
                         </button>
                     ) : (
-                        <>
-                            <button onClick={handleNext} className="next-button">
-                                {currentIndex < questions.length - 1 ? "Next" : "Finish"}
-                            </button>
-
-                            {/* Draggable Explanation Box */}
-                            <div
-                                className="explanation-container"
-                                style={{ top: `${position.y}px`, left: `${position.x}px` }}
-                                onMouseDown={handleDragStart}
-                            >
-                                <Explanation question={questions[currentIndex]} />
-                            </div>
-                        </>
+                        <button onClick={handleNext} className="next-button">
+                            {currentIndex < questions.length - 1 ? "Next" : "Finish"}
+                        </button>
                     )}
                 </div>
             </div>

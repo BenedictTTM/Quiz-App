@@ -10,6 +10,7 @@ const { HfInference } = require("@huggingface/inference");
 
 
 
+
 const Question = require('./Models/models'); // Corrected model import
 
 const ChemQuestion = require('./Models/ChemModel'); // Corrected model import
@@ -23,7 +24,7 @@ const User = require('./Models/auth.model'); // New User model
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 5000;
 const hf = new HfInference(process.env.HUG);
 
 const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";

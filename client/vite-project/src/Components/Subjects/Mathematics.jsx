@@ -25,7 +25,8 @@ function MathQuiz() {
             axios
                 .get("http://localhost:5000/questions/mathematics")
                 .then((result) => {
-                    setQuestions(result.data);
+                    const shuffledQuestions = shuffleArray(result.data);
+                    setQuestions(shuffledQuestions);
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -34,6 +35,15 @@ function MathQuiz() {
                 });
         }, 3000);
     }, []);
+
+    const shuffleArray = (array) => {
+        let shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    };
 
     const handleAnswerSelect = (answer) => {
         if (!isSubmitted) {
@@ -113,7 +123,7 @@ function MathQuiz() {
             <div className="progress-bar">
                 <div
                     className="progress"
-                    style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+                    style={{ width: questions.length > 0 ? `${((currentIndex + 1) / questions.length) * 100}%` : "0%" }}
                 ></div>
             </div>
 
@@ -125,12 +135,12 @@ function MathQuiz() {
                         {currentIndex + 1} / {questions.length}
                     </strong>
                 </p>
-                <p>Score: {Math.round((score / questions.length) * 100)}%</p>
+                <p>Score: {questions.length > 0 ? Math.round((score / questions.length) * 100) : 0}%</p>
             </div>
 
             <div className="question-box">
                 <p className="question-text">
-                    {questions[currentIndex].question}
+                    {questions.length > 0 ? questions[currentIndex].question : "Loading question..."}
                 </p>
                 <form className="options-list">
                     {options.map((option, index) => {

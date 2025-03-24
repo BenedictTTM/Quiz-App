@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../Styles/Questions.css"; 
+import "../../Styles/Questions.css";
 import Explanation from "../Explanation";
 import Score from "../Score";
 import Skelet from "../Skelet";
@@ -15,25 +15,19 @@ function Chemistry() {
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // State for draggable explanation
-    const [position, setPosition] = useState({ x: 50, y: 50 });
-    const [dragging, setDragging] = useState(false);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
-
     useEffect(() => {
-        // Simulate loading before fetching questions
-        setTimeout(() => {
-            axios
-                .get("http://localhost:5000/questions/chemistry")
-                .then((result) => {
-                    setQuestions(result.data);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error("Error fetching questions:", error);
-                    setLoading(false);
-                });
-        }, 2000);
+        setLoading(true);
+        axios
+            .get("http://localhost:5000/questions/chemistry")
+            .then((result) => {
+                const shuffledQuestions = result.data.sort(() => Math.random() - 0.5); // Shuffle questions
+                setQuestions(shuffledQuestions.slice(0, 10)); // Select 10 random questions
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching questions:", error);
+                setLoading(false);
+            });
     }, []);
 
     const handleAnswerSelect = (answer) => {
@@ -54,7 +48,7 @@ function Chemistry() {
             setAllWrongAnswers((prev) => [
                 ...prev,
                 { ...currentQuestion, userAnswer: selectedAnswer }
-            ]); 
+            ]);
         }
     };
 
@@ -68,12 +62,10 @@ function Chemistry() {
         }
     };
 
-    // Show skeleton while loading
     if (loading) {
         return <Skelet />;
     }
 
-    // Handle empty questions array
     if (questions.length === 0) {
         return <p>No questions available.</p>;
     }
@@ -96,35 +88,12 @@ function Chemistry() {
 
     const correctAnswer = questions[currentIndex]?.answer;
 
-    // Drag event handlers
-    const handleDragStart = (e) => {
-        setDragging(true);
-        setOffset({
-            x: e.clientX - position.x,
-            y: e.clientY - position.y
-        });
-    };
-
-    const handleDrag = (e) => {
-        if (!dragging) return;
-        setPosition({
-            x: e.clientX - offset.x,
-            y: e.clientY - offset.y
-        });
-    };
-
-    const handleDragEnd = () => {
-        setDragging(false);
-    };
-
     return (
-        <div className="quiz-container" onMouseMove={handleDrag} onMouseUp={handleDragEnd}>
+        <div className="quiz-container">
             <div className="progress-bar">
                 <div
                     className="progress"
-                    style={{
-                        width: `${((currentIndex + 1) / questions.length) * 100}%`,
-                    }}
+                    style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
                 ></div>
             </div>
 
@@ -179,20 +148,9 @@ function Chemistry() {
                             Submit
                         </button>
                     ) : (
-                        <>
-                            <button onClick={handleNext} className="next-button">
-                                {currentIndex < questions.length - 1 ? "Next" : "Finish"}
-                            </button>
-
-                            {/* Draggable Explanation Box */}
-                            <div
-                                className="explanation-container"
-                                style={{ top: `${position.y}px`, left: `${position.x}px` }}
-                                onMouseDown={handleDragStart}
-                            >
-                                <Explanation question={questions[currentIndex]} />
-                            </div>
-                        </>
+                        <button onClick={handleNext} className="next-button">
+                            {currentIndex < questions.length - 1 ? "Next" : "Finish"}
+                        </button>
                     )}
                 </div>
             </div>
