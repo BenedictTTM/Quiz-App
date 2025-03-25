@@ -10,7 +10,6 @@ const { HfInference } = require("@huggingface/inference");
 
 
 
-
 const Question = require('./Models/models'); // Corrected model import
 
 const ChemQuestion = require('./Models/ChemModel'); // Corrected model import
@@ -25,7 +24,7 @@ const User = require('./Models/auth.model'); // New User model
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
-const hf = new HfInference(process.env.HUG);
+const hf = new HfInference("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");
 
 const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
 
@@ -41,7 +40,7 @@ app.post("/register", async (req, res) => {
     const { username, password } = req.body;
     try {
         if (!username || !password) {
-            return res.status(400).json({ message: "All fields  required" });
+            return res.status(400).json({ message: "All fields are required" });
         }
 
         const existingUser = await User.findOne({ username });
@@ -321,6 +320,7 @@ app.delete('/questions/physics/:id', async (req, res) => {
 // AI Response Endpoint (Hugging Face)
 app.post("/ask", async (req, res) => {
     const { question } = req.body;
+
     try {
         const response = await hf.chatCompletion({
             model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
@@ -330,14 +330,19 @@ app.post("/ask", async (req, res) => {
             ],
             max_tokens: 1024
         });
-        res.json({ answer: response.choices[0].message.content });
+
+        console.log("HF Response:", response); // Debugging
+
+        res.json({ answer: response.choices?.[0]?.message?.content || "No response from AI" });
+
     } catch (err) {
+        console.error("Error:", err);
         res.status(500).json({ error: "Failed to get AI response" });
     }
 });
 
 // Connect to MongoDB and Start Server
-mongoose.connect( process.env.MONGO )
+mongoose.connect('mongodb+srv://Benedict:0109089004.password@cluster0.xiocs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => {
         console.log("✅ Connected to MongoDB");
         app.listen(PORT, () => {
