@@ -186,13 +186,26 @@ function MathQuiz() {
                                 {currentIndex < questions.length - 1 ? "Next" : "Finish"}
                             </button>
 
-                            <div
-                                className="explanation-container"
-                                style={{ top: `${position.y}px`, left: `${position.x}px` }}
-                                onMouseDown={handleDragStart}
-                            >
-                                <Explanation question={questions[currentIndex]} />
-                            </div>
+                            {isSubmitted && (
+                                <div
+                                    className="explanation-container"
+                                    style={{
+                                        position: "absolute",
+                                        top: `${position.y}px`,
+                                        left: `${position.x}px`,
+                                        cursor: dragging ? "grabbing" : "grab",
+                                        background: "white",
+                                        padding: "10px",
+                                        border: "1px solid #ccc",
+                                        borderRadius: "5px",
+                                        boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
+                                        userSelect: "none"
+                                    }}
+                                    onMouseDown={handleDragStart}
+                                >
+                                    <Explanation question={questions[currentIndex]} />
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

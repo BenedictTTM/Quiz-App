@@ -16,11 +16,12 @@ function Chemistry() {
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Dragging states
     const [position, setPosition] = useState({ x: 50, y: 50 });
     const [dragging, setDragging] = useState(false);
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+
     const apiUrl = import.meta.env.VITE_BACKEND_URL;
-    
-    console.log("API URL:", apiUrl);
     
     useEffect(() => {
         setTimeout(() => {
@@ -38,7 +39,6 @@ function Chemistry() {
         }, 3000);
     }, []);
     
-
     const shuffleArray = (array) => {
         let shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -101,6 +101,7 @@ function Chemistry() {
 
     const correctAnswer = questions[currentIndex]?.answer;
 
+    // Dragging functions
     const handleDragStart = (e) => {
         setDragging(true);
         setOffset({
@@ -186,13 +187,26 @@ function Chemistry() {
                                 {currentIndex < questions.length - 1 ? "Next" : "Finish"}
                             </button>
 
-                            <div
-                                className="explanation-container"
-                                style={{ top: `${position.y}px`, left: `${position.x}px` }}
-                                onMouseDown={handleDragStart}
-                            >
-                                <Explanation question={questions[currentIndex]} />
-                            </div>
+                            {isSubmitted && (
+                                <div
+                                    className="explanation-container"
+                                    style={{
+                                        position: "absolute",
+                                        top: `${position.y}px`,
+                                        left: `${position.x}px`,
+                                        cursor: dragging ? "grabbing" : "grab",
+                                        background: "white",
+                                        padding: "10px",
+                                        border: "1px solid #ccc",
+                                        borderRadius: "5px",
+                                        boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
+                                        userSelect: "none"
+                                    }}
+                                    onMouseDown={handleDragStart}
+                                >
+                                    <Explanation question={questions[currentIndex]} />
+                                </div>
+                            )}
                         </>
                     )}
                 </div>
