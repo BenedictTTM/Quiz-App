@@ -32,7 +32,7 @@ function Quiz() {
                     setLoading(false);
                 })
                 .catch((error) => {
-                    console.error("Error fetching questions:", error);
+                    console.error("Error fetching theee questions:", error);
                     setLoading(false);
                 });
         }, 3000);
