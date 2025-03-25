@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../Styles/Questions.css"; 
+
 import Explanation from "../Explanation";
 import Score from "../Score";
-import Skelet from "../Skelet"; // ✅ Import Skelet component
+import Skelet from "../Skelet";
 
 function Physics() {
     const [questions, setQuestions] = useState([]);
@@ -13,29 +14,39 @@ function Physics() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
-    const [loading, setLoading] = useState(true); // ✅ Added loading state
+    const [loading, setLoading] = useState(true);
 
-    // State for draggable explanation
     const [position, setPosition] = useState({ x: 50, y: 50 });
     const [dragging, setDragging] = useState(false);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
-
+    const apiUrl = import.meta.env.VITE_BACKEND_URL;
+    
+    console.log("API URL:", apiUrl);
+    
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
+        setTimeout(() => {
             axios
-                .get("http://localhost:5000/questions/physics")
+                .get(`${apiUrl}/questions/mathematics`)
                 .then((result) => {
-                    setQuestions(result.data);
-                    setLoading(false); // ✅ Set loading to false after fetching
+                    const shuffledQuestions = shuffleArray(result.data).slice(0, 10); // Get only 10 questions
+                    setQuestions(shuffledQuestions);
+                    setLoading(false);
                 })
                 .catch((error) => {
                     console.error("Error fetching questions:", error);
-                    setLoading(false); // ✅ Ensure loading stops even on error
+                    setLoading(false);
                 });
-        }, 3000); // ✅ SetTimeout added before fetching
-
-        return () => clearTimeout(timeoutId); // ✅ Cleanup timeout on unmount
+        }, 3000);
     }, []);
+    
+
+    const shuffleArray = (array) => {
+        let shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled
+    };
 
     const handleAnswerSelect = (answer) => {
         if (!isSubmitted) {
@@ -46,7 +57,6 @@ function Physics() {
     const handleSubmit = () => {
         if (!selectedAnswer) return;
         setIsSubmitted(true);
-
         const currentQuestion = questions[currentIndex];
 
         if (selectedAnswer === currentQuestion.answer) {
@@ -55,7 +65,7 @@ function Physics() {
             setAllWrongAnswers((prev) => [
                 ...prev,
                 { ...currentQuestion, userAnswer: selectedAnswer }
-            ]); 
+            ]);
         }
     };
 
@@ -70,7 +80,7 @@ function Physics() {
     };
 
     if (loading) {
-        return <Skelet />; // ✅ Show Skelet while loading
+        return <Skelet />;
     }
 
     if (quizCompleted) {
@@ -91,7 +101,6 @@ function Physics() {
 
     const correctAnswer = questions[currentIndex]?.answer;
 
-    // Drag event handlers
     const handleDragStart = (e) => {
         setDragging(true);
         setOffset({
@@ -117,13 +126,11 @@ function Physics() {
             <div className="progress-bar">
                 <div
                     className="progress"
-                    style={{
-                        width: `${((currentIndex + 1) / questions.length) * 100}%`,
-                    }}
+                    style={{ width: questions.length > 0 ? `${((currentIndex + 1) / questions.length) * 100}%` : "0%" }}
                 ></div>
             </div>
 
-            <h1 className="quiz-title">Quiz</h1>
+            <h1 className="quiz-title">Physics Quiz</h1>
 
             <div className="score-bar">
                 <p>
@@ -131,12 +138,12 @@ function Physics() {
                         {currentIndex + 1} / {questions.length}
                     </strong>
                 </p>
-                <p>Score: {Math.round((score / questions.length) * 100)}%</p>
+                <p>Score: {questions.length > 0 ? Math.round((score / questions.length) * 100) : 0}%</p>
             </div>
 
             <div className="question-box">
                 <p className="question-text">
-                    {questions[currentIndex].question}
+                    {questions.length > 0 ? questions[currentIndex].question : "Loading question..."}
                 </p>
                 <form className="options-list">
                     {options.map((option, index) => {
@@ -179,7 +186,6 @@ function Physics() {
                                 {currentIndex < questions.length - 1 ? "Next" : "Finish"}
                             </button>
 
-                            {/* Draggable Explanation Box */}
                             <div
                                 className="explanation-container"
                                 style={{ top: `${position.y}px`, left: `${position.x}px` }}

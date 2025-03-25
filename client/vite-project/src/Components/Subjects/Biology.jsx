@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../Styles/alert.css"; 
+import "../../Styles/Questions.css"; 
 
 import Explanation from "../Explanation";
 import Score from "../Score";
+import Skelet from "../Skelet";
 
 function Quiz() {
     const [questions, setQuestions] = useState([]);
@@ -13,15 +14,30 @@ function Quiz() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
+    const [position, setPosition] = useState({ x: 50, y: 50 });
+    const [dragging, setDragging] = useState(false);
+    const apiUrl = import.meta.env.VITE_BACKEND_URL;
+    
+    console.log("API URL:", apiUrl);
+    
     useEffect(() => {
-        axios.get("http://localhost:5000/questions/biology")
-            .then((result) => {
-                const shuffledQuestions = shuffleArray(result.data);
-                setQuestions(shuffledQuestions);
-            })
-            .catch((error) => console.error("Error fetching questions:", error));
+        setTimeout(() => {
+            axios
+                .get(`${apiUrl}/questions/biology`)
+                .then((result) => {
+                    const shuffledQuestions = shuffleArray(result.data).slice(0, 10); // Get only 10 questions
+                    setQuestions(shuffledQuestions);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("Error fetching questions:", error);
+                    setLoading(false);
+                });
+        }, 3000);
     }, []);
+    
 
     const shuffleArray = (array) => {
         let shuffled = [...array];
@@ -29,7 +45,7 @@ function Quiz() {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
-        return shuffled;
+        return shuffled
     };
 
     const handleAnswerSelect = (answer) => {
@@ -41,15 +57,15 @@ function Quiz() {
     const handleSubmit = () => {
         if (!selectedAnswer) return;
         setIsSubmitted(true);
-
         const currentQuestion = questions[currentIndex];
+
         if (selectedAnswer === currentQuestion.answer) {
             setScore((prev) => prev + 1);
         } else {
             setAllWrongAnswers((prev) => [
                 ...prev,
                 { ...currentQuestion, userAnswer: selectedAnswer }
-            ]); 
+            ]);
         }
     };
 
@@ -63,8 +79,8 @@ function Quiz() {
         }
     };
 
-    if (questions.length === 0) {
-        return <p className="loading">Loading questions...</p>;
+    if (loading) {
+        return <Skelet />;
     }
 
     if (quizCompleted) {
@@ -85,18 +101,36 @@ function Quiz() {
 
     const correctAnswer = questions[currentIndex]?.answer;
 
+    const handleDragStart = (e) => {
+        setDragging(true);
+        setOffset({
+            x: e.clientX - position.x,
+            y: e.clientY - position.y
+        });
+    };
+
+    const handleDrag = (e) => {
+        if (!dragging) return;
+        setPosition({
+            x: e.clientX - offset.x,
+            y: e.clientY - offset.y
+        });
+    };
+
+    const handleDragEnd = () => {
+        setDragging(false);
+    };
+
     return (
-        <div className="quiz-container">
+        <div className="quiz-container" onMouseMove={handleDrag} onMouseUp={handleDragEnd}>
             <div className="progress-bar">
                 <div
                     className="progress"
-                    style={{
-                        width: `${((currentIndex + 1) / questions.length) * 100}%`,
-                    }}
+                    style={{ width: questions.length > 0 ? `${((currentIndex + 1) / questions.length) * 100}%` : "0%" }}
                 ></div>
             </div>
 
-            <h1 className="quiz-title">Quiz</h1>
+            <h1 className="quiz-title">Biology Quiz</h1>
 
             <div className="score-bar">
                 <p>
@@ -104,12 +138,12 @@ function Quiz() {
                         {currentIndex + 1} / {questions.length}
                     </strong>
                 </p>
-                <p>Score: {Math.round((score / questions.length) * 100)}%</p>
+                <p>Score: {questions.length > 0 ? Math.round((score / questions.length) * 100) : 0}%</p>
             </div>
 
             <div className="question-box">
                 <p className="question-text">
-                    {questions[currentIndex].question}
+                    {questions.length > 0 ? questions[currentIndex].question : "Loading question..."}
                 </p>
                 <form className="options-list">
                     {options.map((option, index) => {
@@ -147,9 +181,19 @@ function Quiz() {
                             Submit
                         </button>
                     ) : (
-                        <button onClick={handleNext} className="next-button">
-                            {currentIndex < questions.length - 1 ? "Next" : "Finish"}
-                        </button>
+                        <>
+                            <button onClick={handleNext} className="next-button">
+                                {currentIndex < questions.length - 1 ? "Next" : "Finish"}
+                            </button>
+
+                            <div
+                                className="explanation-container"
+                                style={{ top: `${position.y}px`, left: `${position.x}px` }}
+                                onMouseDown={handleDragStart}
+                            >
+                                <Explanation question={questions[currentIndex]} />
+                            </div>
+                        </>
                     )}
                 </div>
             </div>

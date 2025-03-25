@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Login.css";  // Import the updated CSS
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Login() {
     const [userDetails, setUserDetails] = useState({ username: "", password: "" });
@@ -21,7 +22,7 @@ function Login() {
         setLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:5000/login", userDetails);
+            const response = await axios.post(`${apiUrl}/login`, userDetails);
             setMessage(response.data.message);
 
             setTimeout(() => {

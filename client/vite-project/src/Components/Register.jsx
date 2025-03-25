@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Register.css"; // Ensure you have this CSS file
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Register() {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ function Register() {
         setLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:5000/register", userDetails);
+            const response = await axios.post(`${apiUrl}/register`, userDetails);
             setMessage(response.data.message);
             
             setTimeout(() => {

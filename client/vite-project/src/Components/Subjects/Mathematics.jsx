@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../Styles/alert.css"; 
+import "../../Styles/Questions.css"; 
 
 import Explanation from "../Explanation";
 import Score from "../Score";
@@ -18,14 +18,16 @@ function MathQuiz() {
 
     const [position, setPosition] = useState({ x: 50, y: 50 });
     const [dragging, setDragging] = useState(false);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
-
+    const apiUrl = import.meta.env.VITE_BACKEND_URL;
+    
+    console.log("API URL:", apiUrl);
+    
     useEffect(() => {
         setTimeout(() => {
             axios
-                .get("http://localhost:5000/questions/mathematics")
+                .get(`${apiUrl}/questions/mathematics`)
                 .then((result) => {
-                    const shuffledQuestions = shuffleArray(result.data);
+                    const shuffledQuestions = shuffleArray(result.data).slice(0, 10); // Get only 10 questions
                     setQuestions(shuffledQuestions);
                     setLoading(false);
                 })
@@ -35,6 +37,7 @@ function MathQuiz() {
                 });
         }, 3000);
     }, []);
+    
 
     const shuffleArray = (array) => {
         let shuffled = [...array];
@@ -42,7 +45,7 @@ function MathQuiz() {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
-        return shuffled;
+        return shuffled
     };
 
     const handleAnswerSelect = (answer) => {

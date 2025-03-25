@@ -337,7 +337,7 @@ app.post("/ask", async (req, res) => {
 });
 
 // Connect to MongoDB and Start Server
-mongoose.connect( "mongodb+srv://Benedict:0109089004.password@cluster0.xiocs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" || process.env.MONGO )
+mongoose.connect( process.env.MONGO )
     .then(() => {
         console.log("✅ Connected to MongoDB");
         app.listen(PORT, () => {
