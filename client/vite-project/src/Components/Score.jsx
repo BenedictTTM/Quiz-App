@@ -1,5 +1,5 @@
 import React from "react";
-import "../Styles/Score.css";
+
 import Explanation from "./Explanation";
 
 function Score({ finalScore, totalQuestions, wrongAnswers }) {
