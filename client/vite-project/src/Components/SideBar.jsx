@@ -4,7 +4,7 @@ import {
   FaHome, FaBookOpen, FaTrophy, FaShoppingBag,
   FaUserCircle, FaClipboardList, FaTelegramPlane, FaExclamationCircle
 } from "react-icons/fa";
-import "../Styles/Sidebar.css"; // Import styles
+import "../Styles/SideBar.css"; // Import styles
 import nsmq from "../assets/nsmq.png"; // Import the trophy image
 
 const SideBar = () => {
