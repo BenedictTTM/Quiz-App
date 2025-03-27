@@ -25,7 +25,7 @@ function Physics() {
     useEffect(() => {
         setTimeout(() => {
             axios
-                .get(`${apiUrl}/questions/mathematics`)
+                .get(`https://quiz-app-back.onrender.com/questions/mathematics`)
                 .then((result) => {
                     const shuffledQuestions = shuffleArray(result.data).slice(0, 10); // Get only 10 questions
                     setQuestions(shuffledQuestions);
