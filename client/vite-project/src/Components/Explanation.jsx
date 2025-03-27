@@ -12,7 +12,7 @@ function Explanation({ question }) {
     async function fetchAnswer() {
       setIsLoading(true);
       try {
-        const response = await fetch("https://quiz-app-backedbygod.onrender.com/ask", {
+        const response = await fetch("quiz-app-mainback.vercel.app/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question: question.question }),
@@ -29,7 +29,7 @@ function Explanation({ question }) {
     }
 
     fetchAnswer();
-  }, [question, showExplanation]); 
+  }, [question, showExplanation]);
 
   return (
     <div className="explanation-container">
@@ -39,13 +39,19 @@ function Explanation({ question }) {
           <p className="ai-explanation">
             {isLoading ? "Loading..." : answer}
           </p>
+          <button 
+            className="hide-explanation-btn" 
+            onClick={() => setShowExplanation(false)}
+          >
+            Hide Explanation
+          </button>
         </div>
       ) : (
         <button 
           className="show-explanation-btn" 
           onClick={() => setShowExplanation(true)}
         >
-          View explanation
+          View Explanation
         </button>
       )}
     </div>

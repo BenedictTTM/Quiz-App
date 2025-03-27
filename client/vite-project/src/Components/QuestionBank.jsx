@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
 import { FaRegStickyNote, FaRocket } from "react-icons/fa";
 import "../Styles/QuestionBank.css"; // Import CSS file
+import RightBar from "./RightBar";
 
-// Reusable QuestionBank component
 function QuestionBank({ title, category, date, questions, games, progress, link }) {
   const navigate = useNavigate(); // Enables navigation
 
@@ -42,8 +42,18 @@ function QuestionBank({ title, category, date, questions, games, progress, link 
   );
 }
 
-// Main Component to Render Multiple Quizzes
 function QuizDashboard() {
+  const [showRightBar, setShowRightBar] = useState(window.innerWidth < 800);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowRightBar(window.innerWidth < 600); // Show sidebar if width is less than 600px
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const quizzes = [
     { title: "Mathematics Quiz", category: "Algebra & Calculus", date: "Wed, 05 Mar 25", questions: 120, games: 3, progress: 45, link: "/Mathematics" },
     { title: "Biology Quiz", category: "Genetics & Evolution", date: "Sat, 12 Apr 25", questions: 180, games: 2, progress: 30, link: "/Biology" },
@@ -56,6 +66,9 @@ function QuizDashboard() {
       {quizzes.map((quiz, index) => (
         <QuestionBank key={index} {...quiz} />
       ))}
+      
+      {/* Only render RightBar when screen width is less than 600px */}
+      {!showRightBar && <RightBar />}
     </div>
   );
 }

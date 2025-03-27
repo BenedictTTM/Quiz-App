@@ -27,7 +27,7 @@ function Login() {
 
             setTimeout(() => {
                 console.log("Navigating to Leaderboard...");
-                navigate("/Leaderboard", { replace: true });
+                navigate("/Questions", { replace: true });
             }, 1500);
         } catch (err) {
             console.error("Error:", err);

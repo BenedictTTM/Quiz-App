@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../Styles/Questions.css"; 
+import "../../Styles/Questions.css";
 
 import Explanation from "../Explanation";
 import Score from "../Score";
@@ -15,29 +15,27 @@ function Chemistry() {
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [allWrongAnswers, setAllWrongAnswers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showExplanation, setShowExplanation] = useState(true);
 
-    const [position, setPosition] = useState({ x: 50, y: 50 });
+    const [position, setPosition] = useState({ x: 200, y: 200 });
     const [dragging, setDragging] = useState(false);
-    const apiUrl = import.meta.env.VITE_BACKEND_URL;
-    
-    console.log("API URL:", apiUrl);
-    
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+
     useEffect(() => {
         setTimeout(() => {
             axios
-                .get(`https://quiz-app-backedbygod.onrender.com/questions/biology`)
+                .get(`quiz-app-mainback.vercel.app/questions/chemistry`)
                 .then((result) => {
-                    const shuffledQuestions = shuffleArray(result.data).slice(0, 10); // Get only 10 questions
+                    const shuffledQuestions = shuffleArray(result.data).slice(0, 10);
                     setQuestions(shuffledQuestions);
                     setLoading(false);
                 })
                 .catch((error) => {
-                    console.error("Error in fetching questions:", error);
+                    console.error("Error fetching questions:", error);
                     setLoading(false);
                 });
         }, 3000);
     }, []);
-    
 
     const shuffleArray = (array) => {
         let shuffled = [...array];
@@ -45,7 +43,7 @@ function Chemistry() {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
-        return shuffled
+        return shuffled;
     };
 
     const handleAnswerSelect = (answer) => {
@@ -57,15 +55,13 @@ function Chemistry() {
     const handleSubmit = () => {
         if (!selectedAnswer) return;
         setIsSubmitted(true);
+        setShowExplanation(true);
         const currentQuestion = questions[currentIndex];
 
         if (selectedAnswer === currentQuestion.answer) {
             setScore((prev) => prev + 1);
         } else {
-            setAllWrongAnswers((prev) => [
-                ...prev,
-                { ...currentQuestion, userAnswer: selectedAnswer }
-            ]);
+            setAllWrongAnswers((prev) => [...prev, { ...currentQuestion, userAnswer: selectedAnswer }]);
         }
     };
 
@@ -74,32 +70,11 @@ function Chemistry() {
             setCurrentIndex((prev) => prev + 1);
             setSelectedAnswer("");
             setIsSubmitted(false);
+            setShowExplanation(false);
         } else {
             setQuizCompleted(true);
         }
     };
-
-    if (loading) {
-        return <Skelet />;
-    }
-
-    if (quizCompleted) {
-        return (
-            <div className="score-container">
-                <Score 
-                    finalScore={score} 
-                    totalQuestions={questions.length} 
-                    wrongAnswers={allWrongAnswers} 
-                />
-            </div>
-        );
-    }
-
-    const options = Array.isArray(questions[currentIndex]?.possibleAnswer)
-        ? questions[currentIndex].possibleAnswer
-        : [];
-
-    const correctAnswer = questions[currentIndex]?.answer;
 
     const handleDragStart = (e) => {
         setDragging(true);
@@ -121,30 +96,39 @@ function Chemistry() {
         setDragging(false);
     };
 
+    if (loading) {
+        return <Skelet />;
+    }
+
+    if (quizCompleted) {
+        return (
+            <div className="score-container">
+                <Score finalScore={score} totalQuestions={questions.length} wrongAnswers={allWrongAnswers} />
+            </div>
+        );
+    }
+
+    const options = Array.isArray(questions[currentIndex]?.possibleAnswer)
+        ? questions[currentIndex].possibleAnswer
+        : [];
+
+    const correctAnswer = questions[currentIndex]?.answer;
+
     return (
         <div className="quiz-container" onMouseMove={handleDrag} onMouseUp={handleDragEnd}>
             <div className="progress-bar">
-                <div
-                    className="progress"
-                    style={{ width: questions.length > 0 ? `${((currentIndex + 1) / questions.length) * 100}%` : "0%" }}
-                ></div>
+                <div className="progress" style={{ width: questions.length > 0 ? `${((currentIndex + 1) / questions.length) * 100}%` : "0%" }}></div>
             </div>
 
             <h1 className="quiz-title">Chemistry Quiz</h1>
 
             <div className="score-bar">
-                <p>
-                    <strong>
-                        {currentIndex + 1} / {questions.length}
-                    </strong>
-                </p>
+                <p><strong>{currentIndex + 1} / {questions.length}</strong></p>
                 <p>Score: {questions.length > 0 ? Math.round((score / questions.length) * 100) : 0}%</p>
             </div>
 
             <div className="question-box">
-                <p className="question-text">
-                    {questions.length > 0 ? questions[currentIndex].question : "Loading question..."}
-                </p>
+                <p className="question-text">{questions.length > 0 ? questions[currentIndex].question : "Loading question..."}</p>
                 <form className="options-list">
                     {options.map((option, index) => {
                         let optionClass = "";
@@ -173,11 +157,7 @@ function Chemistry() {
 
                 <div className="buttons">
                     {!isSubmitted ? (
-                        <button
-                            onClick={handleSubmit}
-                            disabled={!selectedAnswer}
-                            className="submit-button"
-                        >
+                        <button onClick={handleSubmit} disabled={!selectedAnswer} className="submit-button">
                             Submit
                         </button>
                     ) : (
@@ -186,13 +166,16 @@ function Chemistry() {
                                 {currentIndex < questions.length - 1 ? "Next" : "Finish"}
                             </button>
 
-                            <div
-                                className="explanation-container"
-                                style={{ top: `${position.y}px`, left: `${position.x}px` }}
-                                onMouseDown={handleDragStart}
-                            >
-                                <Explanation question={questions[currentIndex]} />
-                            </div>
+                            {showExplanation && (
+                                <div
+                                    className="explanation-container"
+                                    style={{ top: `${position.y}px`, left: `${position.x}px` }}
+                                    onMouseDown={handleDragStart}
+                                >
+                                    <button className="close-button" onClick={() => setShowExplanation(false)}>✖</button>
+                                    <Explanation question={questions[currentIndex]} />
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

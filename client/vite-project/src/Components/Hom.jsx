@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RightBar from "./RightBar";
 import "../Styles/Hom.css";
-import Skelet from "./Skelet";
+
 
 function Hom() {
   const [ranQuote, setRanQuote] = useState(0);

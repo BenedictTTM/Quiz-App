@@ -1,0 +1,15 @@
+.show-explanation-btn, .hide-explanation-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.show-explanation-btn:hover, .hide-explanation-btn:hover {
+    background-color: #0056b3;
+}
