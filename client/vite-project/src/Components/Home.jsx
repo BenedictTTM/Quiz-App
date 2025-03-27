@@ -16,7 +16,7 @@ function Home() {
 
       <div className="buttons">
 
-        <button className="register-button" onClick={() => navigate("/Register")}>
+        <button className="register-button" onClick={() => navigate("/hom")}>
           📝 
         </button>
       </div>
