@@ -25,7 +25,7 @@ function MathQuiz() {
     useEffect(() => {
         setTimeout(() => {
             axios
-                .get(`https://quiz-app-back.onrender.com/questions/mathematics`)
+                .get(`https://quiz-app-backedbygod.onrender.com/questions/mathematics`)
                 .then((result) => {
                     const shuffledQuestions = shuffleArray(result.data).slice(0, 10); // Get only 10 questions
                     setQuestions(shuffledQuestions);

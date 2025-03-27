@@ -12,7 +12,7 @@ function Explanation({ question }) {
     async function fetchAnswer() {
       setIsLoading(true);
       try {
-        const response = await fetch("https://quiz-app-back.onrender.com/ask", {
+        const response = await fetch("https://quiz-app-backedbygod.onrender.com/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question: question.question }),
