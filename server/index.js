@@ -346,7 +346,7 @@ mongoose.connect('mongodb+srv://Benedict:0109089004.password@cluster0.xiocs.mong
     .then(() => {
         console.log("✅ Connected to MongoDB");
         app.listen(PORT, () => {
-            console.log(`🚀 Server running on http://localhost:${PORT}`);
+            console.log(`🚀 Server is running on http://localhost:${PORT}`);
         });
     })
     .catch(err => console.error("❌ Database connection error:", err));
